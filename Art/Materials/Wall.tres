@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://celogto4ius18"]
+
+[ext_resource type="Texture2D" uid="uid://cq04m3lx655ru" path="res://Art/Textures/thomas-stewart-cyber-ground-base-colour.jpg" id="1_domai"]
+
+[resource]
+albedo_texture = ExtResource("1_domai")
+uv1_scale = Vector3(14.256, 4.752, 4.752)

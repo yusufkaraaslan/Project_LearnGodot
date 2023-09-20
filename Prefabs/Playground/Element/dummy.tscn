@@ -1,0 +1,154 @@
+[gd_scene load_steps=13 format=3 uid="uid://dcgngywh1xpbv"]
+
+[ext_resource type="PackedScene" uid="uid://cngrcovgihjtn" path="res://Art/Models/Training Ground Models/Dummy.glb" id="1_aqlbp"]
+[ext_resource type="Script" path="res://Scripts/Dummy.gd" id="2_4qs7a"]
+[ext_resource type="PackedScene" uid="uid://c7b5alvp8a8l7" path="res://Prefabs/hitable_area.tscn" id="3_aogvj"]
+[ext_resource type="Script" path="res://Scripts/Bilbord3DObject.gd" id="4_m758y"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_loxia"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_v4544"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_myf42"]
+cull_mode = 1
+albedo_color = Color(1, 0.0745098, 0.219608, 0.588235)
+billboard_keep_scale = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_o3syk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0waby"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.384314, 0.847059, 0, 0.588235)
+emission_enabled = true
+emission = Color(0.384314, 0.847059, 0, 1)
+emission_energy_multiplier = 0.5
+
+[sub_resource type="Animation" id="Animation_2dcd8"]
+resource_name = "Down"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dummy2")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.6, 1, 0.707107, -5.39026e-24, -5.39026e-24, 0.707107)
+
+[sub_resource type="Animation" id="Animation_gn2v3"]
+resource_name = "Up"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dummy2")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.707107, 0, 0, 0.707107, 0.6, 1, 1.74393e-16, 1.74393e-16, 1.74393e-16, 1)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vq7fx"]
+_data = {
+"Down": SubResource("Animation_2dcd8"),
+"Up": SubResource("Animation_gn2v3")
+}
+
+[node name="Dummy" node_paths=PackedStringArray("anim", "restartTimer") instance=ExtResource("1_aqlbp")]
+script = ExtResource("2_4qs7a")
+anim = NodePath("AnimationPlayer")
+restartTimer = NodePath("Restart Timer")
+
+[node name="Dummy2" parent="." index="0"]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 0.1, 2.08165e-12)
+
+[node name="Hitable Area" parent="Dummy2" index="0" instance=ExtResource("3_aogvj")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.739897, 0)
+canTakeDamege = true
+
+[node name="Ground" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.059, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+mesh = SubResource("CylinderMesh_loxia")
+
+[node name="Ground2" type="MeshInstance3D" parent="Ground" index="0"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 0.5, 3.26157e-05, 2.01581, -0.000247002)
+mesh = SubResource("CylinderMesh_loxia")
+skeleton = NodePath("../..")
+
+[node name="Helath Indicator" type="Node3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2, 2.08165e-12)
+script = ExtResource("4_m758y")
+lookObjectGroup = "Player"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Helath Indicator" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("BoxMesh_v4544")
+surface_material_override/0 = SubResource("StandardMaterial3D_myf42")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Helath Indicator/MeshInstance3D" index="0"]
+transform = Transform3D(0.07, 0, 0, 0, 0.525, 0, 0, 0, 0.7, -0.53444, 0, 2.08165e-11)
+mesh = SubResource("BoxMesh_v4544")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_myf42")
+
+[node name="1" type="MeshInstance3D" parent="Helath Indicator" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(0.088, 0, 0, 0, 0.15, 0, 0, 0, 0.132, -0.44, 0, 0.0238122)
+mesh = SubResource("BoxMesh_o3syk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0waby")
+
+[node name="2" type="MeshInstance3D" parent="Helath Indicator" index="2"]
+unique_name_in_owner = true
+transform = Transform3D(0.088, 0, 0, 0, 0.15, 0, 0, 0, 0.132, -0.33, 0, 0.0238122)
+mesh = SubResource("BoxMesh_o3syk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0waby")
+
+[node name="3" type="MeshInstance3D" parent="Helath Indicator" index="3"]
+unique_name_in_owner = true
+transform = Transform3D(0.088, 0, 0, 0, 0.15, 0, 0, 0, 0.132, -0.22, 0, 0.0238122)
+mesh = SubResource("BoxMesh_o3syk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0waby")
+
+[node name="4" type="MeshInstance3D" parent="Helath Indicator" index="4"]
+unique_name_in_owner = true
+transform = Transform3D(0.088, 0, 0, 0, 0.15, 0, 0, 0, 0.132, -0.11, 0, 0.0238122)
+mesh = SubResource("BoxMesh_o3syk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0waby")
+
+[node name="5" type="MeshInstance3D" parent="Helath Indicator" index="5"]
+unique_name_in_owner = true
+transform = Transform3D(0.088, 0, 0, 0, 0.15, 0, 0, 0, 0.132, 0, 0, 0.0238122)
+mesh = SubResource("BoxMesh_o3syk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0waby")
+
+[node name="6" type="MeshInstance3D" parent="Helath Indicator" index="6"]
+unique_name_in_owner = true
+transform = Transform3D(0.088, 0, 0, 0, 0.15, 0, 0, 0, 0.132, 0.11, 0, 0.0238122)
+mesh = SubResource("BoxMesh_o3syk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0waby")
+
+[node name="7" type="MeshInstance3D" parent="Helath Indicator" index="7"]
+unique_name_in_owner = true
+transform = Transform3D(0.088, 0, 0, 0, 0.15, 0, 0, 0, 0.132, 0.22, 0, 0.0238122)
+mesh = SubResource("BoxMesh_o3syk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0waby")
+
+[node name="8" type="MeshInstance3D" parent="Helath Indicator" index="8"]
+unique_name_in_owner = true
+transform = Transform3D(0.088, 0, 0, 0, 0.15, 0, 0, 0, 0.132, 0.33, 0, 0.0238122)
+mesh = SubResource("BoxMesh_o3syk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0waby")
+
+[node name="9" type="MeshInstance3D" parent="Helath Indicator" index="9"]
+unique_name_in_owner = true
+transform = Transform3D(0.088, 0, 0, 0, 0.15, 0, 0, 0, 0.132, 0.44, 0, 0.0238122)
+mesh = SubResource("BoxMesh_o3syk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0waby")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_vq7fx")
+}
+
+[node name="Restart Timer" type="Timer" parent="." index="4"]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="Hit" from="Dummy2/Hitable Area" to="." method="_on_hitable_area_hit"]
+[connection signal="timeout" from="Restart Timer" to="." method="_on_restart_timer_timeout"]

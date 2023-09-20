@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ynfk4rgcpp8a"]
+
+[ext_resource type="Texture2D" uid="uid://cq04m3lx655ru" path="res://Art/Textures/thomas-stewart-cyber-ground-base-colour.jpg" id="1_bo8ox"]
+
+[resource]
+albedo_texture = ExtResource("1_bo8ox")
+emission_energy_multiplier = 3.0
+emission_texture = ExtResource("1_bo8ox")
+backlight = Color(0, 0.792157, 0.894118, 1)
+uv1_scale = Vector3(10, 10, 10)

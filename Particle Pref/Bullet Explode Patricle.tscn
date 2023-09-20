@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://cxgywwlxa1irn"]
+
+[ext_resource type="Texture2D" uid="uid://doe6og8fxdwqx" path="res://addons/kenney_particle_pack/circle_05.png" id="1_pcrtn"]
+[ext_resource type="Texture2D" uid="uid://ciws0oeqossko" path="res://addons/kenney_particle_pack/circle_03.png" id="2_r5jin"]
+
+[sub_resource type="Gradient" id="Gradient_1pqib"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.611664, 1)
+colors = PackedColorArray(1.5, 1.5, 0, 1, 0.9, 0.72, 0, 1, 1.4, 0, 0.03, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_11dxe"]
+gradient = SubResource("Gradient_1pqib")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nogpw"]
+lifetime_randomness = 0.5
+direction = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+spread = 180.0
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+initial_velocity_max = 10.0
+damping_max = 6.0
+color_ramp = SubResource("GradientTexture1D_11dxe")
+turbulence_enabled = true
+turbulence_noise_scale = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_12es8"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("1_pcrtn")
+emission = Color(0.490196, 0.329412, 0.321569, 1)
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+backlight_texture = ExtResource("2_r5jin")
+disable_receive_shadows = true
+billboard_mode = 2
+billboard_keep_scale = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_t5gdg"]
+material = SubResource("StandardMaterial3D_12es8")
+shape = 0
+
+[node name="GPUParticles3D" type="GPUParticles3D"]
+emitting = false
+amount = 40
+lifetime = 1.5
+one_shot = true
+speed_scale = 3.0
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_nogpw")
+draw_pass_1 = SubResource("RibbonTrailMesh_t5gdg")

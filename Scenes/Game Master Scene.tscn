@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://c5bkb4mh7yvt4"]
+
+[ext_resource type="Script" path="res://Scripts/Camera Controller.gd" id="2_1d7c8"]
+[ext_resource type="PackedScene" uid="uid://cvbh027oj0e7i" path="res://Prefabs/Player Character.tscn" id="2_r6qkd"]
+[ext_resource type="Material" uid="uid://celogto4ius18" path="res://Art/Materials/Wall.tres" id="4_157nx"]
+[ext_resource type="PackedScene" uid="uid://j0evfpt3lyeq" path="res://Prefabs/Playground/Playgrounds/Dummy Playground.tscn" id="5_usvhk"]
+[ext_resource type="PackedScene" uid="uid://cr1a40cya6lf5" path="res://Prefabs/Playground/Playgrounds/Shielded Dummy Playground.tscn" id="6_extnm"]
+[ext_resource type="PackedScene" uid="uid://bm5a6e4g7cfmh" path="res://Prefabs/Playground/Playgrounds/Follow Turret Playground.tscn" id="6_g4j6h"]
+[ext_resource type="PackedScene" uid="uid://dggv6i86sd33r" path="res://Prefabs/Playground/Playgrounds/Turret Playground.tscn" id="7_61we3"]
+[ext_resource type="PackedScene" uid="uid://y2nlh4aobcx5" path="res://Prefabs/intup_text.tscn" id="8_usocj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_aocf1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pjxrp"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_xqajp"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="Master" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.948793, 0.234435, 0.211735, -0.295261, 0.896408, 0.330564, -0.112305, -0.376154, 0.919726, 0, 10.1989, 0)
+
+[node name="Camera parent" type="Node3D" parent="." groups=["CameraController"]]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 2.08165e-12, 0.713, 2.08165e-12)
+script = ExtResource("2_1d7c8")
+lerpSpeed = 3.0
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Camera parent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.676233, 9.57526, 1.99584)
+collision_mask = 2
+spring_length = 15.0
+
+[node name="Camera3D" type="Camera3D" parent="Camera parent/SpringArm3D"]
+transform = Transform3D(2.5, 0, 0, 0, 2.43786, 0.553915, 0, -0.553915, 2.43786, -1.17225, 12.2718, 9.68923)
+
+[node name="Player Look At" type="Node3D" parent="Camera parent"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.57067, -53.0115)
+
+[node name="Player" parent="." instance=ExtResource("2_r6qkd")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.527978, 0)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(120, 0, 0, 0, 1, 0, 0, 0, 20, 30, -0.5, 2.08165e-12)
+mesh = SubResource("BoxMesh_aocf1")
+surface_material_override/0 = SubResource("StandardMaterial3D_pjxrp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_xqajp")
+
+[node name="Wall 3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-6.11959e-06, -1, -1.31134e-06, 0, -4.37114e-08, 30, -140, 4.37114e-08, 5.73206e-14, -30, -5, 2.08165e-12)
+mesh = SubResource("BoxMesh_aocf1")
+surface_material_override/0 = ExtResource("4_157nx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Wall 3"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall 3/StaticBody3D"]
+transform = Transform3D(1.016, 3.44234e-21, -4.85432e-31, -3.44234e-21, 1.016, 0, 4.85432e-31, 0, 1.016, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_xqajp")
+
+[node name="Wall 4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-6.11959e-06, -1, -1.31134e-06, 0, -4.37114e-08, 30, -140, 4.37114e-08, 5.73206e-14, 90, -5, 2.08165e-12)
+mesh = SubResource("BoxMesh_aocf1")
+surface_material_override/0 = ExtResource("4_157nx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Wall 4"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall 4/StaticBody3D"]
+transform = Transform3D(1.016, 3.44234e-21, -4.85432e-31, -3.44234e-21, 1.016, 0, 4.85432e-31, 0, 1.016, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_xqajp")
+
+[node name="Dummy Playground" parent="." instance=ExtResource("5_usvhk")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 2.08165e-12, 2.08165e-12, -40)
+
+[node name="Shielded Dummy Playground" parent="." instance=ExtResource("6_extnm")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 60, 2.08165e-12, -40)
+
+[node name="Follow Turret Playground" parent="." instance=ExtResource("6_g4j6h")]
+transform = Transform3D(-4, 1.39515e-15, -3.49691e-07, 1.39515e-15, 4, -1.39515e-15, 3.49691e-07, -1.39515e-15, -4, 2.08165e-12, 2.08165e-12, 40)
+
+[node name="Turret Playground" parent="." instance=ExtResource("7_61we3")]
+transform = Transform3D(-4, 1.39515e-15, -3.49691e-07, 1.39515e-15, 4, -1.39515e-15, 3.49691e-07, -1.39515e-15, -4, 60, 2.08165e-12, 40)
+
+[node name="Intup Text" parent="." instance=ExtResource("8_usocj")]

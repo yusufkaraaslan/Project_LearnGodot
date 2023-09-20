@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://crlux4647k2"]
+
+[ext_resource type="Script" path="res://Scripts/Bullet.gd" id="1_7f14t"]
+[ext_resource type="PackedScene" uid="uid://bnsk8ch4r8ad2" path="res://Particle Pref/flame_trail.tscn" id="1_28h6g"]
+[ext_resource type="PackedScene" uid="uid://cxgywwlxa1irn" path="res://Particle Pref/Bullet Explode Patricle.tscn" id="2_sfloy"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bm1rf"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_wypvx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igyp3"]
+albedo_color = Color(0.552941, 0.494118, 1, 1)
+metallic = 1.0
+emission_enabled = true
+emission = Color(0.992157, 0.607843, 0, 1)
+emission_energy_multiplier = 6.0
+backlight = Color(0.478431, 0.831373, 0.34902, 1)
+grow = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7yf61"]
+
+[node name="Bullet root" type="RigidBody3D" node_paths=PackedStringArray("timer") groups=["Bullet"]]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+gravity_scale = 2.66454e-15
+continuous_cd = true
+constant_force = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+script = ExtResource("1_7f14t")
+Speed = 3500
+HitGroup = "Hitable"
+selfDistroyTime = 3
+timer = NodePath("Timer")
+bulletExplodeParticle = ExtResource("2_sfloy")
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
+shape = SubResource("SphereShape3D_bm1rf")
+
+[node name="Object" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
+mesh = SubResource("SphereMesh_wypvx")
+surface_material_override/0 = SubResource("StandardMaterial3D_igyp3")
+
+[node name="Area3D" type="Area3D" parent="." groups=["Bullet"]]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+shape = SubResource("SphereShape3D_7yf61")
+
+[node name="Flame Trail" parent="." instance=ExtResource("1_28h6g")]
+transform = Transform3D(0.49, 0, 0, 0, 0.49, 0, 0, 0, 0.49, -0.0135049, -0.0104357, -0.399001)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

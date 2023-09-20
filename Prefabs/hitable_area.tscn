@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7b5alvp8a8l7"]
+
+[ext_resource type="Script" path="res://Scripts/Hitable.gd" id="1_gvnu3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cu8mq"]
+radius = 0.209683
+
+[node name="Hitable Area" type="Area3D" groups=["Hitable"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_gvnu3")
+
+[node name="Shape" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_cu8mq")

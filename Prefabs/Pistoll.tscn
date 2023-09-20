@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkf80llmh7eka"]
+
+[ext_resource type="PackedScene" uid="uid://byiejhe0tttcn" path="res://Art/Models/Player Weapon/Pistoll.glb" id="1_ikpex"]
+[ext_resource type="Material" uid="uid://cbwgnd7v46m3r" path="res://Art/Models/Player Weapon/pistoll.tres" id="2_4bgj4"]
+[ext_resource type="Script" path="res://Scripts/Weapon Controller.gd" id="2_kthcg"]
+[ext_resource type="PackedScene" uid="uid://crlux4647k2" path="res://Prefabs/Bullet.tscn" id="3_nk0rd"]
+
+[node name="Pistoll" node_paths=PackedStringArray("firePoint") instance=ExtResource("1_ikpex")]
+script = ExtResource("2_kthcg")
+bullet = ExtResource("3_nk0rd")
+firePoint = NodePath("Firepoint")
+
+[node name="Cube" parent="." index="0"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+surface_material_override/0 = ExtResource("2_4bgj4")
+
+[node name="Firepoint" type="Node3D" parent="." index="1"]
+transform = Transform3D(-1.31134e-08, 1.04636e-16, 0.3, 1.04636e-16, 0.3, -1.04636e-16, -0.3, 1.04636e-16, -1.31134e-08, 1.41926, 1.24185, 0)

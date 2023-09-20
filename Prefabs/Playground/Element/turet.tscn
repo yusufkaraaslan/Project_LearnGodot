@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://ct5ojt7abl8r0"]
+
+[ext_resource type="PackedScene" uid="uid://cijn7slpc53pn" path="res://Art/Models/Training Ground Models/Turet.glb" id="1_j6jbo"]
+[ext_resource type="Script" path="res://Scripts/Turret.gd" id="2_e7yti"]
+[ext_resource type="PackedScene" uid="uid://crlux4647k2" path="res://Prefabs/Bullet.tscn" id="3_4t2dt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jkcmk"]
+albedo_color = Color(1, 0.505882, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kd8c4"]
+size = Vector3(0.776, 0.82, 0.288)
+
+[node name="Turet" node_paths=PackedStringArray("firePoint") instance=ExtResource("1_j6jbo")]
+script = ExtResource("2_e7yti")
+bullet = ExtResource("3_4t2dt")
+firePoint = NodePath("Fire Point")
+fireDelay = 2.0
+canFire = true
+
+[node name="Turret" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_jkcmk")
+
+[node name="Fire Timer" type="Timer" parent="." index="1"]
+unique_name_in_owner = true
+wait_time = 1.5
+autostart = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.356135, 0.0508766)
+shape = SubResource("BoxShape3D_kd8c4")
+
+[node name="Fire Point" type="Node3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.610642, 0.298002)
+
+[connection signal="timeout" from="Fire Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr1a40cya6lf5"]
+
+[ext_resource type="PackedScene" uid="uid://dji4oady06ewt" path="res://Prefabs/Playground/Element/room.tscn" id="1_7f0js"]
+[ext_resource type="PackedScene" uid="uid://cy85n3ja0g6gt" path="res://Prefabs/Playground/Element/Shielded Dummy.tscn" id="2_p8x8m"]
+
+[node name="Shielded Dummy Playground" type="Node3D"]
+
+[node name="Room" parent="." instance=ExtResource("1_7f0js")]
+
+[node name="Shielded Dummy" parent="." instance=ExtResource("2_p8x8m")]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dancnymct0c8j"]
+
+[sub_resource type="Curve" id="Curve_fywob"]
+max_value = 1.5
+_data = [Vector2(0.00607814, 1.86799), 0.0, 0.0, 0, 0, Vector2(1, 0.239603), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2ioi3"]
+curve = SubResource("Curve_fywob")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oaofs"]
+lifetime_randomness = 0.32
+emission_shape = 3
+emission_box_extents = Vector3(2, 2, 0.2)
+direction = Vector3(2.08165e-12, 2.08165e-12, 1)
+gravity = Vector3(2.08165e-12, 1, 2.08165e-12)
+initial_velocity_max = 5.0
+scale_curve = SubResource("CurveTexture_2ioi3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_re1th"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.470588, 0.819608, 0.976471, 1)
+emission_enabled = true
+emission = Color(0.470588, 0.819608, 0.976471, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kq45s"]
+material = SubResource("StandardMaterial3D_re1th")
+
+[node name="Shield Brake Particle" type="GPUParticles3D"]
+emitting = false
+amount = 20
+lifetime = 1.5
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.83
+randomness = 0.3
+process_material = SubResource("ParticleProcessMaterial_oaofs")
+draw_pass_1 = SubResource("BoxMesh_kq45s")

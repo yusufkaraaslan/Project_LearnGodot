@@ -1,0 +1,20 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://dfr0psc6237g8"]
+
+[sub_resource type="Curve" id="Curve_4jljf"]
+max_value = 3.0
+_data = [Vector2(0.00189591, 2.40454), 0.0, 0.0, 0, 0, Vector2(0.999413, 0.691399), -0.923761, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_yk6h7"]
+curve = SubResource("Curve_4jljf")
+
+[resource]
+lifetime_randomness = 0.15
+direction = Vector3(2.08165e-12, 1, 2.08165e-12)
+gravity = Vector3(2.08165e-12, 2.08165e-12, -9.8)
+angular_velocity_max = 1.4988e-14
+linear_accel_min = 2.08167e-15
+linear_accel_max = 10.0
+radial_accel_min = 2.08167e-15
+radial_accel_max = 2.08167e-15
+scale_curve = SubResource("CurveTexture_yk6h7")
